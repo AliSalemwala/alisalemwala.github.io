@@ -9,8 +9,8 @@ I don't know what your hiring manager will ask, but hopefully there will be some
 
 I realized while writing all this how boring my life really is. I might go get addicted to heroin, smack a pimp, lose everything I own, and then gain it all again. And then update this section. It'll be hell on my body, but at least you'll have more fun reading this page. I'm sorry for everything.
 
-Email me at [ali.salemwala@gmail.com](ali.salemwala@gmail.com).
-See my exaggerated career history on [LinkedIn](https://linkedin.com/in/ali-salemwala).
-Follow me on [Instagram](https://instagram.com/ali.salemwala) so I can brag to my friends.
-See my *Hello world* and calculator applications on [Github](https://github.com/AliSalemwala).
+* Email me at [ali.salemwala@gmail.com](ali.salemwala@gmail.com).
+* See my exaggerated career history on [LinkedIn](https://linkedin.com/in/ali-salemwala).
+* Follow me on [Instagram](https://instagram.com/ali.salemwala) so I can brag to my friends.
+* See my *Hello world* and calculator applications on [Github](https://github.com/AliSalemwala).
 
