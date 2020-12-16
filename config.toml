@@ -7,15 +7,13 @@ publishDir = "docs"
 # enableGitInfo = true
 pygmentsCodefences  = true
 pygmentsUseClasses  = true
-# hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
 rssLimit = 10  # Maximum number of items in the RSS feed.
 copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
 # googleAnalytics = "UA-123-45"
-# disqusShortname = "yourdiscussshortname"
 
 [author]
-  name = "John Doe"
+  name = "Ali Altaf Salemwala"
 [blackfriday]
   # hrefTargetBlank = true
   # noreferrerLinks = true
@@ -36,7 +34,7 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   # images = [""]
   themeColor = "#494f5c"
 
-  homeSubtitle = "A minimal and fast theme for Hugo."
+  homeSubtitle = "an internet presence is important these days"
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # bgImg = ""  # Homepage background-image URL
 
@@ -56,16 +54,24 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
   [[params.social]]
-    name = "twitter"
-    url = "https://twitter.com/"
-
-  [[params.social]]
-    name = "instagram"
-    url = "https://instagram.com/"
+    name = "email"
+    url = "mailto:ali.salemwala@gmail.com"
 
   [[params.social]]
     name = "github"
-    url = "https://github.com/"
+    url = "https://github.com/AliSalemwala"
+
+  [[params.social]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/ali-salemwala"
+
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/AliSalemwala"
+
+  [[params.social]]
+    name = "instagram"
+    url = "https://instagram.com/ali.salemwala"
 
 [menu]
 
