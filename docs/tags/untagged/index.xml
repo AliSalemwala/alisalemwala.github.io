@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>untagged on salemwala.best</title>
+    <link>https://alisalemwala.github.io/tags/untagged/</link>
+    <description>Recent content in untagged on salemwala.best</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 17 Dec 2020 20:47:59 +0300</lastBuildDate><atom:link href="https://alisalemwala.github.io/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Making This</title>
+      <link>https://alisalemwala.github.io/posts/making-this/</link>
+      <pubDate>Thu, 17 Dec 2020 20:47:59 +0300</pubDate>
+      
+      <guid>https://alisalemwala.github.io/posts/making-this/</guid>
+      <description>Making something like this is as simple as it looks. There were a few things I wrestled with, mainly GitHub submodules, but I ended up getting through. I&amp;rsquo;ll explain them further down, both for your sake and my own. I know I&amp;rsquo;ll forget it all in a week.
+Note: It has been exactly 8 weeks since I wrote that note above. I still have not completed this post. I remember absolutely nothing from when I first made it.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 13 Dec 2020 19:14:50 +0300</lastBuildDate><atom:link href="https://alisalemwala.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Dec 2020 20:47:59 +0300</lastBuildDate><atom:link href="https://alisalemwala.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Making This</title>
+      <link>https://alisalemwala.github.io/posts/making-this/</link>
+      <pubDate>Thu, 17 Dec 2020 20:47:59 +0300</pubDate>
+      
+      <guid>https://alisalemwala.github.io/posts/making-this/</guid>
+      <description>Making something like this is as simple as it looks. There were a few things I wrestled with, mainly GitHub submodules, but I ended up getting through. I&amp;rsquo;ll explain them further down, both for your sake and my own. I know I&amp;rsquo;ll forget it all in a week.
+Note: It has been exactly 8 weeks since I wrote that note above. I still have not completed this post. I remember absolutely nothing from when I first made it.</description>
+    </item>
+    
     <item>
       <title>My First Post</title>
       <link>https://alisalemwala.github.io/posts/my-first-post/</link>

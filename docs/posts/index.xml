@@ -6,8 +6,48 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Sun, 13 Dec 2020 19:14:50 +0300</lastBuildDate>
+		<lastBuildDate>Thu, 17 Dec 2020 20:47:59 +0300</lastBuildDate>
 		<atom:link href="https://alisalemwala.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Making This</title>
+			<link>https://alisalemwala.github.io/posts/making-this/</link>
+			<pubDate>Thu, 17 Dec 2020 20:47:59 +0300</pubDate>
+			
+			<guid>https://alisalemwala.github.io/posts/making-this/</guid>
+			<description>Making something like this is as simple as it looks. There were a few things I wrestled with, mainly GitHub submodules, but I ended up getting through. I&amp;rsquo;ll explain them further down, both for your sake and my own. I know I&amp;rsquo;ll forget it all in a week.
+Note: It has been exactly 8 weeks since I wrote that note above. I still have not completed this post. I remember absolutely nothing from when I first made it.</description>
+			<content type="html"><![CDATA[<p>Making something like this is as simple as it looks. There were a few things I wrestled with, mainly GitHub submodules, but I ended up getting through. I&rsquo;ll explain them further down, both for your sake and my own. I know I&rsquo;ll forget it all in a week.</p>
+<p><em>Note</em>: It has been exactly 8 weeks since I wrote that note above. I still have not completed this post. I remember absolutely nothing from when I first made it.</p>
+<h1 id="step-1">Step 1</h1>
+<p>I&rsquo;m hosting this on <a href="https://pages.github.com/">Github Pages</a>. For this, I need to create a repository called <em>alisalemwala.github.io</em>. Everything is automatically hosted from there. Keep it all lowercase, otherwise it won&rsquo;t work. Everything before <em>.github.io</em> should be your GitHub username in lowercase, no more, no less.</p>
+<h1 id="step-2">Step 2</h1>
+<p>I&rsquo;m on a Mac, so I have those stupid <em>.DS_STORE</em> files everywhere. Need to create a <em>.gitignore</em> file to ignore them. <code>Commit</code></p>
+<h1 id="step-3">Step 3</h1>
+<p>I need to create the actual Hugo project now. Run this anywhere:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">hugo new site demo
+</code></pre></div><p>There&rsquo;s now a new <em>demo</em> folder with empty hugo configurations. Copy the contents of this to the <em>alisalemwala.github.io</em> folder. That&rsquo;s an empty website. <code>Commit</code></p>
+<h1 id="step-4">Step 4</h1>
+<p>I need to connect submodules. I don&rsquo;t remember why. I need to read about it again and add it here. I do know that it&rsquo;s to add the theme somehow. For <strong>Hermit</strong>:</p>
+<pre><code>git submodule add https://github.com/Track3/hermit.git themes/hermit
+</code></pre><p>There should be a <em>themes</em> folder, with another <em>hermit</em> folder inside it. That&rsquo;s the submodule. <code>Commit</code></p>
+<h1 id="step-5">Step 5</h1>
+<p>I need to specify which directory the files are published from. This is where Hugo autogenerates the files to display. The <em>docs</em> folder. So go to <em>config.toml</em> and add these in new lines:</p>
+<pre><code>baseURL = &quot;https://alisalemwala.github.io/&quot;
+publishDir = &quot;docs&quot;
+</code></pre><p>This should finalise your basic configuration. To test this, run:</p>
+<pre><code>hugo server
+</code></pre><p>Visit whichever port on localhost where this is deployed (1313 for me) and click around to see if everything is okay. Now build:</p>
+<pre><code>hugo -D
+</code></pre><p>Everything is built! <code>Commit</code> and if you wait for the GitHub pipeline to finish, you should be able to visit your version of <a href="https://alisalemwala.github.io/">https://alisalemwala.github.io/</a> and see the same things you saw on localhost.</p>
+<h1 id="step-6">Step 6</h1>
+<p>I&rsquo;ve got another step in my notes which says to copy everything from the <em>exampleSite</em> folder inside the <em>hugo</em> theme file and re-run <code>hugo -D</code>. I don&rsquo;t know why I did any of this. I also added a note that submodules halted my progress a lot. I remember using a workaroud for them in the beginning, just to see the site working at least. Based on the commit history, it seems I got them working later, but I can&rsquo;t be sure. I need to see if this is actually a step, or just some confused notes.</p>
+<h1 id="step-7">Step 7</h1>
+<p>I need to add a post. Run:</p>
+<pre><code>hugo new posts/making-this.md
+</code></pre><p>THe post is created. Edit the contents in Markdown to get the content you want. In the header, change the <code>draft</code> property to <code>false</code>. Run <code>hugo -D</code> to create the requisite files. <code>Commit</code></p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>My First Post</title>

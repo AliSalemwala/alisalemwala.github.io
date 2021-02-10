@@ -56,4 +56,4 @@ I need to add a post. Run:
 ```
 hugo new posts/making-this.md
 ```
-THe post is created. Edit the contents in Markdown to get the content you want. In the header, change the `draft` property to `false`. `Commit`
+THe post is created. Edit the contents in Markdown to get the content you want. In the header, change the `draft` property to `false`. Run `hugo -D` to create the requisite files. `Commit`
