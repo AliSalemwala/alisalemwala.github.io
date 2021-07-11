@@ -6,8 +6,110 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Thu, 17 Dec 2020 20:47:59 +0300</lastBuildDate>
+		<lastBuildDate>Sun, 11 Jul 2021 15:06:17 +0200</lastBuildDate>
 		<atom:link href="https://alisalemwala.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Diet</title>
+			<link>https://alisalemwala.github.io/posts/diet/</link>
+			<pubDate>Sun, 11 Jul 2021 15:06:17 +0200</pubDate>
+			
+			<guid>https://alisalemwala.github.io/posts/diet/</guid>
+			<description>Turkey: I lived here from August 2015 to May 2021. I started out as a university student on a strict self-appointed budget, and transitioned into an extremely highly paid professional without any budget really, but with a focus on remaining economical wherever possible. What this means is, I started to enjoy myself and indulge in little (and sometimes not so little) pleasures. On the whole, however, I did not move onto luxury.</description>
+			<content type="html"><![CDATA[<h1 id="turkey">Turkey:</h1>
+<p>I lived here from August 2015 to May 2021. I started out as a university student on a strict self-appointed budget, and transitioned into an extremely highly paid professional without any budget really, but with a focus on remaining economical wherever possible. What this means is, I started to enjoy myself and indulge in little (and sometimes not so little) pleasures. On the whole, however, I did not move onto luxury.</p>
+<p>My biggest regret for my university years is the obsession I had with conserving every penny. This cost me numerous opportunities of all kinds, and I guess I’ll never fully know what I missed out on; it’s entirely possible I didn’t miss out on anything, but that wouldn&rsquo;t pacify the pessimist in me. One piece of advice, don’t save money just to save it. Have a plan for what it will be used for, and if you can’t plan anything for it then spend it on something you’ll enjoy “in the now”. Misery is not a virtue. Get it?</p>
+<p>My biggest regrets for my short-lived time of luxury are:</p>
+<ol>
+<li>Not having enough time to blow the cash I was getting (COVID-19 started a month after I got my first baller salary), and</li>
+<li>Not managing a budget to see where my money went, even though it made absolutely no difference to me.</li>
+</ol>
+<p>I’d suggest keeping a budget, if not for the money then at least just to see where it all goes. It can give you a good sense of direction, priorities, and inefficiencies.</p>
+<p>Anyway, the reason I’m writing up the Turkish section now is because I’ve been in Munich over three weeks now, made my way through the discounters and Turkish shops here, talked to a few locals, and have conclusively decided my diet will be in for big changes. It’s best to let the Turkish version go now, and note it down here before it leaves my mind.</p>
+<p>I usually bought my food from BIM or A-101, because they were the cheapest stores close to my home. Vegetables and fruits, I purchased from Soykan because it had a good balance of freshness, quality, and price. Everyday I ate the same thing, and saw good results, fast. Combined with a rigorous gym routine, you’ll notice improvements fast.</p>
+<p>The items in the graph represent raw ingredients, and were usually combined into meals based on what was logical and convenient at the time. I don’t have records of the macros exactly, but all of my requirements were satisfied. Fruits and vegetables, of course, depended on the season.</p>
+<table>
+<thead>
+<tr>
+<th>Food</th>
+<th>Quantity</th>
+<th>Energy (kcal)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yoghurt (Yoğurt)</td>
+<td>450 g</td>
+<td>306</td>
+</tr>
+<tr>
+<td>Eggs</td>
+<td>5</td>
+<td>441</td>
+</tr>
+<tr>
+<td>Oats</td>
+<td>100 g</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Honey</td>
+<td>40 ml</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Nuts</td>
+<td>50 g</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Milk</td>
+<td>5000 ml</td>
+<td>1026</td>
+</tr>
+<tr>
+<td>Barbunya/Nohut/Mercimek</td>
+<td>130 g</td>
+<td>435</td>
+</tr>
+<tr>
+<td>Fruit</td>
+<td>Variable, no limit</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Vegetables</td>
+<td>Variable, no limit</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Bulgur Pilavlik</td>
+<td>100 g</td>
+<td>381</td>
+</tr>
+<tr>
+<td>Chicken (breast/legs)</td>
+<td>200 g</td>
+<td>330</td>
+</tr>
+<tr>
+<td>Water</td>
+<td>3 L</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Protein Powder</td>
+<td>1 scoop</td>
+<td>95</td>
+</tr>
+</tbody>
+</table>
+<p>Total calories: <strong>3014</strong></p>
+<p>I’m around 173 cm and to gain weight and muscle fast, this is a pretty good diet. Low in saturated fats and empty calories. High in fiber. Great protein content. Enough carbohydrates to keep your energy up. Hits every segment of vitamins, minerals, and all that other stuff. No processed foods. High in volume so you stay full for a long time. Nothing is processed, no sweets, no fake Nestle “fruit juices”. Adaptable, and easy to prepare.</p>
+<p>This was also during COVID and work-from-home, by the way, so I was just attending meetings while I had my mercimek boiling in the background, or chicken baking in the oven, or oats soaking in honey and milk. I didn’t need to constantly be in the kitchen cooking, is what I mean. That’s something I’ve been struggling with in Germany so far, but let’s see what the future holds.</p>
+<p>That’s it for Turkey. I haven’t got my German diet down to a science yet; I’m facing some challenges there, but that’s to be expected. It’s still better than my American diet of canned beans and corn and gallons of milk, at least. This is fun, I hope I can do it for many more countries to come.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Making This</title>
@@ -80,33 +182,29 @@ This theme has 3 CSS classes made for figure elements:
 </ul>
 <p>If a figure has no class set, the image will behave just like a normal markdown image: <code>![]()</code>.</p>
 <p>Here&rsquo;s some examples, please be aware that these styles only take effect when the page width is over 1300px.</p>
-<figure>
-    <img src="https://via.placeholder.com/1600x800"
-         alt="image"/> <figcaption>
+<figure><img src="https://via.placeholder.com/1600x800"
+         alt="image"/><figcaption>
             <p>figure-normal (without any classes)</p>
         </figcaption>
 </figure>
 
 <p>Pellentesque posuere sem nec nunc varius, id hendrerit arcu consequat. Maecenas commodo, sapien ut gravida porttitor, dolor risus facilisis enim, eget pharetra nibh nisl porttitor sapien. Proin finibus elementum ligula sit amet hendrerit. Praesent et erat sodales ante accumsan pharetra non eu nulla. Sed vehicula consequat lorem, a fermentum ante faucibus quis. Aliquam erat volutpat. In vitae tincidunt dui. Proin sit amet ligula sodales, elementum tortor et, venenatis sem. Maecenas non nisl erat. Curabitur nec velit eros. Ut cursus lacus nisi, non pretium libero euismod et. Fusce luctus in nisi quis sollicitudin. Aenean nec blandit ligula. Duis ac felis lorem. Proin tellus tellus, dictum nec tempus sit amet, venenatis ac felis. Sed in pharetra nulla, non mollis sem.</p>
-<figure class="big">
-    <img src="https://via.placeholder.com/1600x800"
-         alt="image"/> <figcaption>
+<figure class="big"><img src="https://via.placeholder.com/1600x800"
+         alt="image"/><figcaption>
             <p>figure-big</p>
         </figcaption>
 </figure>
 
 <p>Suspendisse fringilla malesuada massa, in malesuada orci lacinia a. Praesent dapibus faucibus nisl, id volutpat elit bibendum eu. Nulla vitae laoreet nibh, eu hendrerit lacus. Donec lacinia auctor ligula, vel interdum ipsum malesuada vitae. Donec placerat a justo eu gravida. Aenean ultricies imperdiet convallis. Pellentesque accumsan non ex sed euismod. Proin bibendum lectus nec enim faucibus feugiat. Donec hendrerit nisi viverra ornare luctus. Nullam non viverra nisl. Nam vel tellus et tortor elementum volutpat sit amet et erat. Aliquam a libero quis libero porta consectetur. Etiam aliquam felis vel nulla mattis finibus. Mauris laoreet lacus arcu, sed rhoncus odio condimentum sed. Aenean in dui rutrum elit faucibus faucibus nec fringilla augue. Fusce non ornare mauris.</p>
-<figure class="left">
-    <img src="https://via.placeholder.com/400x280"
-         alt="image"/> <figcaption>
+<figure class="left"><img src="https://via.placeholder.com/400x280"
+         alt="image"/><figcaption>
             <p>figure-left</p>
         </figcaption>
 </figure>
 
 <p>In a libero varius, luctus ligula et, bibendum tortor. Sed sit amet dui malesuada, mattis justo id, ultricies enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam sollicitudin cursus feugiat. Vivamus suscipit ipsum eget lobortis sollicitudin. Fusce vehicula neque tellus. Integer eu posuere quam, id laoreet tortor. Mauris sit amet turpis urna. Donec venenatis tempor dolor, nec laoreet orci aliquet et. Sed condimentum elit eu tristique aliquam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc luctus ipsum sit amet nisl maximus pellentesque.</p>
-<figure class="right">
-    <img src="https://via.placeholder.com/400x280"
-         alt="image"/> <figcaption>
+<figure class="right"><img src="https://via.placeholder.com/400x280"
+         alt="image"/><figcaption>
             <p>figure-right</p>
         </figcaption>
 </figure>
@@ -215,7 +313,7 @@ For example:
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p>From <a href="https://en.wikipedia.org/wiki/Apple">https://en.wikipedia.org/wiki/Apple</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>From <a href="https://en.wikipedia.org/wiki/Apple">https://en.wikipedia.org/wiki/Apple</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
