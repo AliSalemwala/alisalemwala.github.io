@@ -1,8 +1,568 @@
 ---
-author: "Michael Henderson"
-date: 2014-09-28
-title: Creating a New Theme
+title: "Hugo Bullshit"
+date: 1996-12-08T00:00:00+00:00
+draft: false
+toc: false
+images:
+  - https://picsum.photos/1024/768/?random
+tags: 
+  - hugo
 ---
+## Migrate Hugo to Jekyll
+
+## Move static content to `static`
+Jekyll has a rule that any directory not starting with `_` will be copied as-is to the `_site` output. Hugo keeps all static content under `static`. You should therefore move it all there.
+With Jekyll, something that looked like
+
+    ▾ <root>/
+        ▾ images/
+            logo.png
+
+should become
+
+    ▾ <root>/
+        ▾ static/
+            ▾ images/
+                logo.png
+
+Additionally, you'll want any files that should reside at the root (such as `CNAME`) to be moved to `static`.
+
+## Create your Hugo configuration file
+Hugo can read your configuration as JSON, YAML or TOML. Hugo supports parameters custom configuration too. Refer to the [Hugo configuration documentation](/overview/configuration/) for details.
+
+## Set your configuration publish folder to `_site`
+The default is for Jekyll to publish to `_site` and for Hugo to publish to `public`. If, like me, you have [`_site` mapped to a git submodule on the `gh-pages` branch](http://blog.blindgaenger.net/generate_github_pages_in_a_submodule.html), you'll want to do one of two alternatives:
+
+1. Change your submodule to point to map `gh-pages` to public instead of `_site` (recommended).
+
+        git submodule deinit _site
+        git rm _site
+        git submodule add -b gh-pages git@github.com:your-username/your-repo.git public
+
+2. Or, change the Hugo configuration to use `_site` instead of `public`.
+
+        {
+            ..
+            "publishdir": "_site",
+            ..
+        }
+
+## Convert Jekyll templates to Hugo templates
+That's the bulk of the work right here. The documentation is your friend. You should refer to [Jekyll's template documentation](http://jekyllrb.com/docs/templates/) if you need to refresh your memory on how you built your blog and [Hugo's template](/layout/templates/) to learn Hugo's way.
+
+As a single reference data point, converting my templates for [heyitsalex.net](http://heyitsalex.net/) took me no more than a few hours.
+
+## Convert Jekyll plugins to Hugo shortcodes
+Jekyll has [plugins](http://jekyllrb.com/docs/plugins/); Hugo has [shortcodes](/doc/shortcodes/). It's fairly trivial to do a port.
+
+### Implementation
+As an example, I was using a custom [`image_tag`](https://github.com/alexandre-normand/alexandre-normand/blob/74bb12036a71334fdb7dba84e073382fc06908ec/_plugins/image_tag.rb) plugin to generate figures with caption when running Jekyll. As I read about shortcodes, I found Hugo had a nice built-in shortcode that does exactly the same thing.
+
+Jekyll's plugin:
+
+    module Jekyll
+      class ImageTag < Liquid::Tag
+        @url = nil
+        @caption = nil
+        @class = nil
+        @link = nil
+        // Patterns
+        IMAGE_URL_WITH_CLASS_AND_CAPTION =
+        IMAGE_URL_WITH_CLASS_AND_CAPTION_AND_LINK = /(\w+)(\s+)((https?:\/\/|\/)(\S+))(\s+)"(.*?)"(\s+)->((https?:\/\/|\/)(\S+))(\s*)/i
+        IMAGE_URL_WITH_CAPTION = /((https?:\/\/|\/)(\S+))(\s+)"(.*?)"/i
+        IMAGE_URL_WITH_CLASS = /(\w+)(\s+)((https?:\/\/|\/)(\S+))/i
+        IMAGE_URL = /((https?:\/\/|\/)(\S+))/i
+        def initialize(tag_name, markup, tokens)
+          super
+          if markup =~ IMAGE_URL_WITH_CLASS_AND_CAPTION_AND_LINK
+            @class   = $1
+            @url     = $3
+            @caption = $7
+            @link = $9
+          elsif markup =~ IMAGE_URL_WITH_CLASS_AND_CAPTION
+            @class   = $1
+            @url     = $3
+            @caption = $7
+          elsif markup =~ IMAGE_URL_WITH_CAPTION
+            @url     = $1
+            @caption = $5
+          elsif markup =~ IMAGE_URL_WITH_CLASS
+            @class = $1
+            @url   = $3
+          elsif markup =~ IMAGE_URL
+            @url = $1
+          end
+        end
+        def render(context)
+          if @class
+            source = "<figure class='#{@class}'>"
+          else
+            source = "<figure>"
+          end
+          if @link
+            source += "<a href=\"#{@link}\">"
+          end
+          source += "<img src=\"#{@url}\">"
+          if @link
+            source += "</a>"
+          end
+          source += "<figcaption>#{@caption}</figcaption>" if @caption
+          source += "</figure>"
+          source
+        end
+      end
+    end
+    Liquid::Template.register_tag('image', Jekyll::ImageTag)
+
+is written as this Hugo shortcode:
+
+    <!-- image -->
+    <figure {{ with .Get "class" }}class="{{.}}"{{ end }}>
+        {{ with .Get "link"}}<a href="{{.}}">{{ end }}
+            <img src="{{ .Get "src" }}" {{ if or (.Get "alt") (.Get "caption") }}alt="{{ with .Get "alt"}}{{.}}{{else}}{{ .Get "caption" }}{{ end }}"{{ end }} />
+        {{ if .Get "link"}}</a>{{ end }}
+        {{ if or (or (.Get "title") (.Get "caption")) (.Get "attr")}}
+        <figcaption>{{ if isset .Params "title" }}
+            {{ .Get "title" }}{{ end }}
+            {{ if or (.Get "caption") (.Get "attr")}}<p>
+            {{ .Get "caption" }}
+            {{ with .Get "attrlink"}}<a href="{{.}}"> {{ end }}
+                {{ .Get "attr" }}
+            {{ if .Get "attrlink"}}</a> {{ end }}
+            </p> {{ end }}
+        </figcaption>
+        {{ end }}
+    </figure>
+    <!-- image -->
+
+### Usage
+I simply changed:
+
+    {% image full http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg "One of my favorite touristy-type photos. I secretly waited for the good light while we were "having fun" and took this. Only regret: a stupid pole in the top-left corner of the frame I had to clumsily get rid of at post-processing." ->http://www.flickr.com/photos/alexnormand/4829260124/in/set-72157624547713078/ %}
+
+to this (this example uses a slightly extended version named `fig`, different than the built-in `figure`):
+
+    {{%/* fig class="full" src="http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg" title="One of my favorite touristy-type photos. I secretly waited for the good light while we were having fun and took this. Only regret: a stupid pole in the top-left corner of the frame I had to clumsily get rid of at post-processing." link="http://www.flickr.com/photos/alexnormand/4829260124/in/set-72157624547713078/" */%}}
+
+As a bonus, the shortcode named parameters are, arguably, more readable.
+
+## Finishing touches
+### Fix content
+Depending on the amount of customization that was done with each post with Jekyll, this step will require more or less effort. There are no hard and fast rules here except that `hugo server --watch` is your friend. Test your changes and fix errors as needed.
+
+### Clean up
+You'll want to remove the Jekyll configuration at this point. If you have anything else that isn't used, delete it.
+
+## A practical example in a diff
+[Hey, it's Alex](http://heyitsalex.net/) was migrated in less than a _father-with-kids day_ from Jekyll to Hugo. You can see all the changes (and screw-ups) by looking at this [diff](https://github.com/alexandre-normand/alexandre-normand/compare/869d69435bd2665c3fbf5b5c78d4c22759d7613a...b7f6605b1265e83b4b81495423294208cc74d610).
+
+
+## Hu(go) Template Primer
+
+Hugo uses the excellent [Go][] [html/template][gohtmltemplate] library for
+its template engine. It is an extremely lightweight engine that provides a very
+small amount of logic. In our experience that it is just the right amount of
+logic to be able to create a good static website. If you have used other
+template systems from different languages or frameworks you will find a lot of
+similarities in Go templates.
+
+This document is a brief primer on using Go templates. The [Go docs][gohtmltemplate]
+provide more details.
+
+## Introduction to Go Templates
+
+Go templates provide an extremely simple template language. It adheres to the
+belief that only the most basic of logic belongs in the template or view layer.
+One consequence of this simplicity is that Go templates parse very quickly.
+
+A unique characteristic of Go templates is they are content aware. Variables and
+content will be sanitized depending on the context of where they are used. More
+details can be found in the [Go docs][gohtmltemplate].
+
+## Basic Syntax
+
+Golang templates are HTML files with the addition of variables and
+functions.
+
+**Go variables and functions are accessible within {{ }}**
+
+Accessing a predefined variable "foo":
+
+    {{ foo }}
+
+**Parameters are separated using spaces**
+
+Calling the add function with input of 1, 2:
+
+    {{ add 1 2 }}
+
+**Methods and fields are accessed via dot notation**
+
+Accessing the Page Parameter "bar"
+
+    {{ .Params.bar }}
+
+**Parentheses can be used to group items together**
+
+    {{ if or (isset .Params "alt") (isset .Params "caption") }} Caption {{ end }}
+
+
+## Variables
+
+Each Go template has a struct (object) made available to it. In hugo each
+template is passed either a page or a node struct depending on which type of
+page you are rendering. More details are available on the
+[variables](/layout/variables) page.
+
+A variable is accessed by referencing the variable name.
+
+    <title>{{ .Title }}</title>
+
+Variables can also be defined and referenced.
+
+    {{ $address := "123 Main St."}}
+    {{ $address }}
+
+
+## Functions
+
+Go template ship with a few functions which provide basic functionality. The Go
+template system also provides a mechanism for applications to extend the
+available functions with their own. [Hugo template
+functions](/layout/functions) provide some additional functionality we believe
+are useful for building websites. Functions are called by using their name
+followed by the required parameters separated by spaces. Template
+functions cannot be added without recompiling hugo.
+
+**Example:**
+
+    {{ add 1 2 }}
+
+## Includes
+
+When including another template you will pass to it the data it will be
+able to access. To pass along the current context please remember to
+include a trailing dot. The templates location will always be starting at
+the /layout/ directory within Hugo.
+
+**Example:**
+
+    {{ template "chrome/header.html" . }}
+
+
+## Logic
+
+Go templates provide the most basic iteration and conditional logic.
+
+### Iteration
+
+Just like in Go, the Go templates make heavy use of range to iterate over
+a map, array or slice. The following are different examples of how to use
+range.
+
+**Example 1: Using Context**
+
+    {{ range array }}
+        {{ . }}
+    {{ end }}
+
+**Example 2: Declaring value variable name**
+
+    {{range $element := array}}
+        {{ $element }}
+    {{ end }}
+
+**Example 2: Declaring key and value variable name**
+
+    {{range $index, $element := array}}
+        {{ $index }}
+        {{ $element }}
+    {{ end }}
+
+### Conditionals
+
+If, else, with, or, & and provide the framework for handling conditional
+logic in Go Templates. Like range, each statement is closed with `end`.
+
+
+Go Templates treat the following values as false:
+
+* false
+* 0
+* any array, slice, map, or string of length zero
+
+**Example 1: If**
+
+    {{ if isset .Params "title" }}<h4>{{ index .Params "title" }}</h4>{{ end }}
+
+**Example 2: If -> Else**
+
+    {{ if isset .Params "alt" }}
+        {{ index .Params "alt" }}
+    {{else}}
+        {{ index .Params "caption" }}
+    {{ end }}
+
+**Example 3: And & Or**
+
+    {{ if and (or (isset .Params "title") (isset .Params "caption")) (isset .Params "attr")}}
+
+**Example 4: With**
+
+An alternative way of writing "if" and then referencing the same value
+is to use "with" instead. With rebinds the context `.` within its scope,
+and skips the block if the variable is absent.
+
+The first example above could be simplified as:
+
+    {{ with .Params.title }}<h4>{{ . }}</h4>{{ end }}
+
+**Example 5: If -> Else If**
+
+    {{ if isset .Params "alt" }}
+        {{ index .Params "alt" }}
+    {{ else if isset .Params "caption" }}
+        {{ index .Params "caption" }}
+    {{ end }}
+
+## Pipes
+
+One of the most powerful components of Go templates is the ability to
+stack actions one after another. This is done by using pipes. Borrowed
+from unix pipes, the concept is simple, each pipeline's output becomes the
+input of the following pipe.
+
+Because of the very simple syntax of Go templates, the pipe is essential
+to being able to chain together function calls. One limitation of the
+pipes is that they only can work with a single value and that value
+becomes the last parameter of the next pipeline.
+
+A few simple examples should help convey how to use the pipe.
+
+**Example 1 :**
+
+    {{ if eq 1 1 }} Same {{ end }}
+
+is the same as
+
+    {{ eq 1 1 | if }} Same {{ end }}
+
+It does look odd to place the if at the end, but it does provide a good
+illustration of how to use the pipes.
+
+**Example 2 :**
+
+    {{ index .Params "disqus_url" | html }}
+
+Access the page parameter called "disqus_url" and escape the HTML.
+
+**Example 3 :**
+
+    {{ if or (or (isset .Params "title") (isset .Params "caption")) (isset .Params "attr")}}
+    Stuff Here
+    {{ end }}
+
+Could be rewritten as
+
+    {{  isset .Params "caption" | or isset .Params "title" | or isset .Params "attr" | if }}
+    Stuff Here
+    {{ end }}
+
+
+## Context (aka. the dot)
+
+The most easily overlooked concept to understand about Go templates is that {{ . }}
+always refers to the current context. In the top level of your template this
+will be the data set made available to it. Inside of a iteration it will have
+the value of the current item. When inside of a loop the context has changed. .
+will no longer refer to the data available to the entire page. If you need to
+access this from within the loop you will likely want to set it to a variable
+instead of depending on the context.
+
+**Example:**
+
+      {{ $title := .Site.Title }}
+      {{ range .Params.tags }}
+        <li> <a href="{{ $baseurl }}/tags/{{ . | urlize }}">{{ . }}</a> - {{ $title }} </li>
+      {{ end }}
+
+Notice how once we have entered the loop the value of {{ . }} has changed. We
+have defined a variable outside of the loop so we have access to it from within
+the loop.
+
+# Hugo Parameters
+
+Hugo provides the option of passing values to the template language
+through the site configuration (for sitewide values), or through the meta
+data of each specific piece of content. You can define any values of any
+type (supported by your front matter/config format) and use them however
+you want to inside of your templates.
+
+
+## Using Content (page) Parameters
+
+In each piece of content you can provide variables to be used by the
+templates. This happens in the [front matter](/content/front-matter).
+
+An example of this is used in this documentation site. Most of the pages
+benefit from having the table of contents provided. Sometimes the TOC just
+doesn't make a lot of sense. We've defined a variable in our front matter
+of some pages to turn off the TOC from being displayed.
+
+Here is the example front matter:
+
+```
+---
+title: "Permalinks"
+date: "2013-11-18"
+aliases:
+  - "/doc/permalinks/"
+groups: ["extras"]
+groups_weight: 30
+notoc: true
+---
+```
+
+Here is the corresponding code inside of the template:
+
+      {{ if not .Params.notoc }}
+        <div id="toc" class="well col-md-4 col-sm-6">
+        {{ .TableOfContents }}
+        </div>
+      {{ end }}
+
+
+
+## Using Site (config) Parameters
+In your top-level configuration file (eg, `config.yaml`) you can define site
+parameters, which are values which will be available to you in chrome.
+
+For instance, you might declare:
+
+```yaml
+params:
+  CopyrightHTML: "Copyright &#xA9; 2013 John Doe. All Rights Reserved."
+  TwitterUser: "spf13"
+  SidebarRecentLimit: 5
+```
+
+Within a footer layout, you might then declare a `<footer>` which is only
+provided if the `CopyrightHTML` parameter is provided, and if it is given,
+you would declare it to be HTML-safe, so that the HTML entity is not escaped
+again.  This would let you easily update just your top-level config file each
+January 1st, instead of hunting through your templates.
+
+```
+{{if .Site.Params.CopyrightHTML}}<footer>
+<div class="text-center">{{.Site.Params.CopyrightHTML | safeHtml}}</div>
+</footer>{{end}}
+```
+
+An alternative way of writing the "if" and then referencing the same value
+is to use "with" instead. With rebinds the context `.` within its scope,
+and skips the block if the variable is absent:
+
+```
+{{with .Site.Params.TwitterUser}}<span class="twitter">
+<a href="https://twitter.com/{{.}}" rel="author">
+<img src="/images/twitter.png" width="48" height="48" title="Twitter: {{.}}"
+ alt="Twitter"></a>
+</span>{{end}}
+```
+
+Finally, if you want to pull "magic constants" out of your layouts, you can do
+so, such as in this example:
+
+```
+<nav class="recent">
+  <h1>Recent Posts</h1>
+  <ul>{{range first .Site.Params.SidebarRecentLimit .Site.Recent}}
+    <li><a href="{{.RelPermalink}}">{{.Title}}</a></li>
+  {{end}}</ul>
+</nav>
+```
+
+
+[go]: https://golang.org/
+[gohtmltemplate]: https://golang.org/pkg/html/template/
+
+## Getting Started with Hugo
+
+## Step 1. Install Hugo
+
+Go to [Hugo releases](https://github.com/spf13/hugo/releases) and download the
+appropriate version for your OS and architecture.
+
+Save it somewhere specific as we will be using it in the next step.
+
+More complete instructions are available at [Install Hugo](https://gohugo.io/getting-started/installing/)
+
+## Step 2. Build the Docs
+
+Hugo has its own example site which happens to also be the documentation site
+you are reading right now.
+
+Follow the following steps:
+
+1. Clone the [Hugo repository](http://github.com/spf13/hugo)
+2. Go into the repo
+3. Run hugo in server mode and build the docs
+4. Open your browser to http://localhost:1313
+
+Corresponding pseudo commands:
+
+    git clone https://github.com/spf13/hugo
+    cd hugo
+    /path/to/where/you/installed/hugo server --source=./docs
+    > 29 pages created
+    > 0 tags index created
+    > in 27 ms
+    > Web Server is available at http://localhost:1313
+    > Press ctrl+c to stop
+
+Once you've gotten here, follow along the rest of this page on your local build.
+
+## Step 3. Change the docs site
+
+Stop the Hugo process by hitting Ctrl+C.
+
+Now we are going to run hugo again, but this time with hugo in watch mode.
+
+    /path/to/hugo/from/step/1/hugo server --source=./docs --watch
+    > 29 pages created
+    > 0 tags index created
+    > in 27 ms
+    > Web Server is available at http://localhost:1313
+    > Watching for changes in /Users/spf13/Code/hugo/docs/content
+    > Press ctrl+c to stop
+
+
+Open your [favorite editor](http://vim.spf13.com) and change one of the source
+content pages. How about changing this very file to *fix the typo*. How about changing this very file to *fix the typo*.
+
+Content files are found in `docs/content/`. Unless otherwise specified, files
+are located at the same relative location as the url, in our case
+`docs/content/overview/quickstart.md`.
+
+Change and save this file.. Notice what happened in your terminal.
+
+    > Change detected, rebuilding site
+
+    > 29 pages created
+    > 0 tags index created
+    > in 26 ms
+
+Refresh the browser and observe that the typo is now fixed.
+
+Notice how quick that was. Try to refresh the site before it's finished building. I double dare you.
+Having nearly instant feedback enables you to have your creativity flow without waiting for long builds.
+
+## Step 4. Have fun
+
+The best way to learn something is to play with it.
+
+
+## Creating a New Theme
 
 ## Introduction
 
@@ -1140,3 +1700,114 @@ Note that we removed the date logic from the default template and put it in the 
 ### Don't Repeat Yourself
 
 DRY is a good design goal and Hugo does a great job supporting it. Part of the art of a good template is knowing when to add a new template and when to update an existing one. While you're figuring that out, accept that you'll be doing some refactoring. Hugo makes that easy and fast, so it's okay to delay splitting up a template.
+
+## Typography
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+> An apple is a sweet, edible fruit produced by an apple tree (Malus pumila). Apple trees are cultivated worldwide, and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. Apples have been grown for thousands of years in Asia and Europe, and were brought to North America by European colonists. Apples have religious and mythological significance in many cultures, including Norse, Greek and European Christian traditions.[^1]
+
+---
+
+Inline styles：
+
+**strong**, *emphasis*, ***strong and emphasis***,`code`, <u>underline</u>, ~~strikethrough~~, :joy:🤣, $\LaTeX$, X^2^, H~2~O, ==highlight==, [Link](https://example.com), and image:
+
+![img](https://picsum.photos/600/400/?random)
+
+---
+
+Headings:
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+Table:
+
+| Left-Aligned  | Center Aligned  | Right Aligned |
+| :------------ | :-------------: | ------------: |
+| col 3 is      | some wordy text |         $1600 |
+| col 2 is      |    centered     |           $12 |
+| zebra stripes |    are neat     |            $1 |
+
+Lists:
+
+* Unordered list item 1.
+* Unordered list item 2.
+
+1. ordered list item 1.
+2. ordered list item 2.
+    + sub-unordered list item 1.
+    + sub-unordered list item 2.
+        + [x] something is DONE.
+        + [ ] something is NOT DONE.
+
+Syntax Highlighting:
+
+```javascript
+var num1, num2, sum
+num1 = prompt("Enter first number")
+num2 = prompt("Enter second number")
+sum = parseInt(num1) + parseInt(num2) // "+" means "add"
+alert("Sum = " + sum)  // "+" means combine into a string
+```
+
+[^1]: From https://en.wikipedia.org/wiki/Apple
+
+## Post with Featured Image
+
+Just define the image URL in the content’s front matter, the featured image will be displayed as the background.
+
+For example:
+
+```yaml
+---
+images:
+  - https://picsum.photos/1024/768/?random
+---
+```
+
+This is an array, you can set multiple urls, only the first url will be used. These images is also used in [Twitter Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html) and the [Open Graph](http://ogp.me/) metadata.
+
+## The "figure" Shortcode
+
+Hugo has `figure` shortcode built in, so you can easily add figcaptions or hyperlink rel attributes to images. Documentations can be found here:
+
+https://gohugo.io/content-management/shortcodes/#figure
+
+This theme has 3 CSS classes made for figure elements:
+
+* `big`: images will break the width limit of main content area.
+* `left`: images will float to the left.
+* `right`: images will float to the right.
+
+If a figure has no class set, the image will behave just like a normal markdown image: `![]()`.
+
+Here's some examples, please be aware that these styles only take effect when the page width is over 1300px.
+
+{{< figure src="https://via.placeholder.com/1600x800" alt="image" caption="figure-normal (without any classes)" >}}
+
+Pellentesque posuere sem nec nunc varius, id hendrerit arcu consequat. Maecenas commodo, sapien ut gravida porttitor, dolor risus facilisis enim, eget pharetra nibh nisl porttitor sapien. Proin finibus elementum ligula sit amet hendrerit. Praesent et erat sodales ante accumsan pharetra non eu nulla. Sed vehicula consequat lorem, a fermentum ante faucibus quis. Aliquam erat volutpat. In vitae tincidunt dui. Proin sit amet ligula sodales, elementum tortor et, venenatis sem. Maecenas non nisl erat. Curabitur nec velit eros. Ut cursus lacus nisi, non pretium libero euismod et. Fusce luctus in nisi quis sollicitudin. Aenean nec blandit ligula. Duis ac felis lorem. Proin tellus tellus, dictum nec tempus sit amet, venenatis ac felis. Sed in pharetra nulla, non mollis sem.
+
+{{< figure src="https://via.placeholder.com/1600x800" alt="image" caption="figure-big" class="big" >}}
+
+Suspendisse fringilla malesuada massa, in malesuada orci lacinia a. Praesent dapibus faucibus nisl, id volutpat elit bibendum eu. Nulla vitae laoreet nibh, eu hendrerit lacus. Donec lacinia auctor ligula, vel interdum ipsum malesuada vitae. Donec placerat a justo eu gravida. Aenean ultricies imperdiet convallis. Pellentesque accumsan non ex sed euismod. Proin bibendum lectus nec enim faucibus feugiat. Donec hendrerit nisi viverra ornare luctus. Nullam non viverra nisl. Nam vel tellus et tortor elementum volutpat sit amet et erat. Aliquam a libero quis libero porta consectetur. Etiam aliquam felis vel nulla mattis finibus. Mauris laoreet lacus arcu, sed rhoncus odio condimentum sed. Aenean in dui rutrum elit faucibus faucibus nec fringilla augue. Fusce non ornare mauris.
+
+{{< figure src="https://via.placeholder.com/400x280" alt="image" caption="figure-left" class="left" >}}
+
+In a libero varius, luctus ligula et, bibendum tortor. Sed sit amet dui malesuada, mattis justo id, ultricies enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam sollicitudin cursus feugiat. Vivamus suscipit ipsum eget lobortis sollicitudin. Fusce vehicula neque tellus. Integer eu posuere quam, id laoreet tortor. Mauris sit amet turpis urna. Donec venenatis tempor dolor, nec laoreet orci aliquet et. Sed condimentum elit eu tristique aliquam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc luctus ipsum sit amet nisl maximus pellentesque.
+
+{{< figure src="https://via.placeholder.com/400x280" alt="image" caption="figure-right" class="right" >}}
+
+Pellentesque eu consequat nunc. Vivamus eu eros ut nulla dapibus molestie in id tortor. Cras viverra ligula erat, tincidunt hendrerit diam blandit nec. Cras id urna vel dolor dictum mattis. Vestibulum congue erat ac eros molestie accumsan. Maecenas lorem nibh, maximus vel justo eget, facilisis egestas lectus. Mauris eu est ut odio blandit consequat id feugiat eros. Fusce id suscipit mi, et lacinia lectus. Mauris a arcu placerat dolor iaculis feugiat nec non mi. Ut porttitor elit tortor, eget tempus velit mollis eu. Aliquam sem nulla, dictum cursus mauris ac, semper ullamcorper leo.
+
+Donec nec tincidunt est. Sed id metus in erat fringilla mattis at id turpis. Aliquam tempor vehicula faucibus. Phasellus consequat aliquam odio. Morbi a ex vitae sapien porta auctor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sit amet nulla arcu. Praesent ut tortor purus. Praesent id eros diam. Pellentesque vitae dolor at nibh ultrices accumsan eu id urna. Aliquam finibus interdum orci in varius. Pellentesque a enim condimentum, condimentum felis id, vehicula augue. Vivamus cursus commodo eros nec lacinia.
