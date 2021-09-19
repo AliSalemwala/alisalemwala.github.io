@@ -32,7 +32,7 @@ Eggs | 5 | 441
 Oats | 100 g | -
 Honey | 40 ml | -
 Nuts | 50 g | -
-Milk | 5000 ml | 1026
+Milk | 1000 ml | 1026
 Barbunya/Nohut/Mercimek | 130 g | 435
 Fruit | Variable, no limit | N/A
 Vegetables | Variable, no limit | N/A
@@ -49,3 +49,27 @@ I’m around 173 cm and to gain weight and muscle fast, this is a pretty good di
 This was also during COVID and work-from-home, by the way, so I was just attending meetings while I had my mercimek boiling in the background, or chicken baking in the oven, or oats soaking in honey and milk. I didn’t need to constantly be in the kitchen cooking, is what I mean. That’s something I’ve been struggling with in Germany so far, but let’s see what the future holds.
 
 That’s it for Turkey. I haven’t got my German diet down to a science yet; I’m facing some challenges there, but that’s to be expected. It’s still better than my American diet of canned beans and corn and gallons of milk, at least. This is fun, I hope I can do it for many more countries to come.
+
+# Germany
+I have been here for three months now (today is 19 September 2021). Not enough time to really set up a perfect diet, but I want to note down some findings.
+
+Red meat is crazy cheap here, so I went wild with it for a while, in the beginning. And I'm not sure if it was all the bratwurst, or the terrible face wash, but my skin would not stop breaking out into pimples. I got rid of both, and it's all back to beauty now. German diets are very calorie dense (sausages, heavy bread, butter, beer) and I think this might come in handy with eating the same amount, while physically eating less. The problem is, this just leaves less wiggle room in the diet, and requires stricter adherence to routine, since these foods are very fat-heavy.
+
+In Turkey, meat was nonexistent in my diet, and chicken only came in as an addition years into this process. In Germany, there were days when the only thing I ate was red meat. On those days, I felt very slow and heavy, and I also noticed my weight growing faster than my strength (i.e. I was getting fat). The discussion then became between red meat cuts, sausages, hackfleisch, and chicken.
+
+After some weeks of experimentation, and a little insight into the kind of lifestyle I wanted, I came to the conclusion that it didn't make sense to keep the rigid diet I had in Turkey. I'm not as stingy as I was in university, nor as content with my friends as I was upon graduation, nor as trapped as I was during the COVID lockdowns. These are the days again of experimentation and exploration. Dozens of new people to meet, new places to see, new hobbies to keep up.
+
+Up until now, it makes sense to limit meats to at most one meal a day, and to standardize the foods that I can have regularly. This will consider foods provided in the office, foods which are more environmentally friendly, and foods which are better for my skin.
+
+Food | Quantity | Energy (kcal)
+------------ | ------------- | -------------
+Fruit | Variable, no limit | N/A
+Vegetables | Variable, no limit | N/A
+Joghurt | 450 g | 338
+Oats | 100 g | 372
+Milk | 500 ml | 320
+Bulgur Pilavlik | 100 g | 381
+Eggs | 3 | 275
+Eiwißbröt | 2 slices | 178
+Barbunya/Nohut/Mercimek | 130 g | 435
+Water | 3 L | N/A
