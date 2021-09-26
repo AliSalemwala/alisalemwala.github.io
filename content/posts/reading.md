@@ -3,7 +3,6 @@ title: "Reading"
 date: 2021-09-26T18:26:21+02:00
 draft: false
 toc: false
-images:
 tags: 
   - reading
 ---

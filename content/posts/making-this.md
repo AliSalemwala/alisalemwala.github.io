@@ -3,7 +3,6 @@ title: "Making This"
 date: 2020-12-17T20:47:59+03:00
 draft: false
 toc: false
-images:
 tags: 
   - untagged
 ---
